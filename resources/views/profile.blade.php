@@ -6,6 +6,17 @@
     <meta name="color-scheme" content="light dark">
     <title>Profilo</title>
     <link rel="stylesheet" href="{{ asset('css/theme.css') }}">
+    <style>
+    input[type="file"]::file-selector-button {
+        background-color: #6C8CFF;
+        color: #000;
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+        padding: 6px 12px;
+        cursor: pointer;
+        font-size: 0.9em;
+        }
+    </style>
 </head>
 <body>
     <header class="navbar">
@@ -121,8 +132,8 @@
             </form>
         </div>
 
-        <div class="link"; style="text-align: center; margin-top: 20px;">
-            <a href="{{ route('dashboard') }}" class="link">← Torna alla Dashboard</a>
+        <div class="link" style="text-align: center; margin-top: 20px;">
+            <a href="{{ route('dashboard') }}">← Torna alla Dashboard</a>
         </div>
     </main>
 
