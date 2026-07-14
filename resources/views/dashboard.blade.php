@@ -16,6 +16,30 @@
             font-size: .95rem;
             margin-right: 1rem;
         }
+        .user-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+        .user-avatar-svg {
+            width: 32px;
+            height: 32px;
+            margin-right: 8px;
+            vertical-align: middle;
+            color: var(--text-secondary);
+        }
+        .profile-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+        .profile-link:hover {
+            color: var(--text-primary);
+        }
     </style>
 </head>
 <body>
@@ -30,8 +54,16 @@
             </svg>
             <span>Acme</span>
         </a>
-        <div class="navbar-right-items">
-            <span class="welcome-message desktop-only">Benvenuto, {{ Auth::user()->name }}</span>
+        <div class="navbar-right-items desktop-only">
+            @if(Auth::user()->avatar)
+                <img src="{{ asset('storage/' . Auth::user()->avatar) }}" alt="Avatar" class="user-avatar">
+            @else
+                <svg class="user-avatar-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+            @endif
+            <div class="link" style="margin-left: 4px; margin-right: 8px">Benvenuto, <a href="{{ route('profile') }}" title="Vai al profilo utente">{{ Auth::user()->name }}</a></div>
             <button class="icon-btn js-theme-toggle desktop-only" type="button" aria-label="Cambia tema chiaro/scuro">
                 <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
@@ -118,16 +150,20 @@
                 </svg>
             </button>
         </div>
-        <span class="welcome-message">Benvenuto, {{ Auth::user()->name }}</span>
+        <div style="display: flex; flex-direction: column; align-items: flex-start;">
+            @if(Auth::user()->avatar)
+                <img src="{{ asset('storage/' . Auth::user()->avatar) }}" alt="Avatar" class="user-avatar" style="margin-bottom: 5px;">
+            @else
+                <svg class="user-avatar-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom: 5px;">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+            @endif
+            <div class="link">Benvenuto, <a href="{{ route('profile') }}" title="Vai al profilo utente">{{ Auth::user()->name }}</a></div>
+        </div>
     </div>
 
     <div class="sidebar-actions">
-        <a href="{{ route('password.change') }}" class="icon-btn" type="button" aria-label="Cambia password" style="margin-bottom: 10px;">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
-                <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
-            </svg>
-        </a>
         <form method="POST" action="{{ route('logout') }}">
             @csrf
             <button class="icon-btn" type="submit" aria-label="Esci">

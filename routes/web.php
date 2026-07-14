@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 // Home: reindirizza al login
@@ -33,4 +34,10 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/reset-password', [AuthController::class, 'updatePassword'])
         ->name('password.update');
+});
+
+// --- Rotte profilo utente (solo utenti autenticati) ---
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'show'])->name('profile');
+    Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
 });
