@@ -19,6 +19,7 @@
     </style>
 </head>
 <body>
+
 <header class="navbar">
     <div class="navbar-brand-toggle">
         <a href="{{ route('dashboard') }}" class="brand">
@@ -70,6 +71,24 @@
 <!-- Overlay scuro dietro la sidebar -->
 <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
+@auth
+    @php
+        $user = auth()->user();
+        $daysSinceChange = $user->password_last_changed_at
+            ? now()->diffInDays($user->password_last_changed_at)
+            : 181; // Se non è mai stata impostata, considera scaduta
+    @endphp
+
+    @if($daysSinceChange >= 180)
+        <div style="padding: 15px; background: #dc3545; color: white; margin-bottom: 20px; border-radius: 5px;">
+            ⚠️ <strong>La tua password è scaduta da {{ max(0, $daysSinceChange - 180) }} giorni.</strong>
+            <a href="{{ route('password.change') }}" style="color: white; margin-left: 10px; text-decoration: underline;">
+                Cambiala ora</a> 
+                per mantenere la sicurezza del tuo account.
+        </div>
+    @endif
+@endauth
+
 <!-- Sidebar mobile: stessa navbar, riorganizzata in verticale -->
 <aside class="sidebar" id="sidebar">
     <div class="sidebar-header">
@@ -103,6 +122,12 @@
     </div>
 
     <div class="sidebar-actions">
+        <a href="{{ route('password.change') }}" class="icon-btn" type="button" aria-label="Cambia password" style="margin-bottom: 10px;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+            </svg>
+        </a>
         <form method="POST" action="{{ route('logout') }}">
             @csrf
             <button class="icon-btn" type="submit" aria-label="Esci">

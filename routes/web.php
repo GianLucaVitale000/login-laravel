@@ -25,3 +25,12 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });
+
+// --- Rotta per reset password (solo utenti autenticati) ---
+Route::middleware('auth')->group(function () {
+    Route::get('/reset-password', [AuthController::class, 'showPasswordResetForm'])
+        ->name('password.change');
+
+    Route::post('/reset-password', [AuthController::class, 'updatePassword'])
+        ->name('password.update');
+});
