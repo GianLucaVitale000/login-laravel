@@ -48,6 +48,14 @@
   - Almeno un numero
   - Almeno un simbolo
 
+### 👤 Gestione Profilo
+
+- ✅ **Pagina profilo** accessibile da dashboard (`/profile`)
+- ✅ **Modifica dati personali**: nome e email
+- ✅ **Upload avatar**: immagine profilo con ridimensionamento automatico (128x128px)
+- ✅ **Visualizzazione informazioni**: data registrazione e ultimo cambio password
+- ✅ Formati supportati: JPG, PNG, GIF (max 2MB)
+
 ### 🔧 Tecnico
 
 - ✅ **Redis** per memorizzazione temporanea dei tentativi di login
@@ -164,6 +172,7 @@ Accedi a: [http://localhost:8000](http://localhost:8000)
 - **Registrazione**: `/register` (con reCAPTCHA)
 - **Dashboard**: `/dashboard` (solo per utenti autenticati)
 - **Cambio password**: `/reset-password` (accessibile dalla dashboard)
+- **Profile**: `/profile` (accessibile dalla dashboard)
 
 ### Credenziali Test User
 
@@ -239,7 +248,8 @@ login-laravel/
 ├── app/
 │   ├── Http/
 │   │   ├── Controllers/
-│   │   │   └── AuthController.php     # Controllore autenticazione con blocco login
+│   │   │   ├── AuthController.php     # Controllore autenticazione con blocco login
+│   │   │   └── ProfileController.php  # Controllore gestione profilo utente
 │   │   └── ...
 │   ├── Models/
 │   │   └── User.php                   # Modello utente
@@ -252,7 +262,8 @@ login-laravel/
 │   │   ├── auth/                      # Viste login e registrazione
 │   │   │   ├── login.blade.php
 │   │   │   └── register.blade.php
-│   │   └── dashboard.blade.php        # Dashboard protetta
+│   │   ├── dashboard.blade.php        # Dashboard protetta
+│   │   └── profile.blade.php          # Pagina profilo utente
 │   └── ...
 ├── routes/
 │   └── web.php                        # Rotte dell'applicazione
